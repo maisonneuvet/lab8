@@ -119,7 +119,9 @@ module MakeInterval (Endpoint : ORDERED_TYPE) =
      | Empty, _ -> Empty
      | _, Empty -> Empty
      | Interval (l1, h1), Interval (l2, h2) -> 
-        if Endpoint.compare h1 l2 <= 0 then Interval (l2, h1) else Empty
+        if Endpoint.compare h1 l2 <= 0 then Interval (l2, h1)
+        else if Endpoint.compare h2 l1 <=0 then Interval (l1, h2)
+        else Empty
     end ;;
 
 (*......................................................................
