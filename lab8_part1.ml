@@ -225,7 +225,8 @@ module MakeSafeInterval (Endpoint : ORDERED_TYPE) =
      | Empty, _ -> Empty
      | _, Empty -> Empty
      | Interval (l1, h1), Interval (l2, h2) -> 
-        if Endpoint.compare h1 l2 <= 0 then Interval (l2, h1) else Empty
+        if Endpoint.compare l2 h1 >= 0 || Endpoint.compare l1 h2 >=0 then Empty
+        else Interval (max l1 l2, min h1 h2)
     end ;;
 
 (* We have successfully made our returned module abstract, but believe
@@ -323,7 +324,8 @@ module MakeBestInterval (Endpoint : ORDERED_TYPE) : (INTERVAL with type endpoint
      | Empty, _ -> Empty
      | _, Empty -> Empty
      | Interval (l1, h1), Interval (l2, h2) -> 
-        if Endpoint.compare h1 l2 <= 0 then Interval (l2, h1) else Empty
+        if Endpoint.compare l2 h1 >= 0 || Endpoint.compare l1 h2 >=0 then Empty
+        else Interval (max l1 l2, min h1 h2)
     end ;;
 
 (* We now have a fully functioning functor that can create interval
