@@ -127,10 +127,12 @@ module MakeStack (Element: SERIALIZE) : (STACK with type element = Element.t) =
 
     let rec serialize (s : stack) : string =
       let r = List.rev s in
-      match r with
+      let rec ser r = 
+      (match r with
       | [] -> ""
       | [a] -> Element.serialize a
-      | hd :: tl -> Element.serialize hd ^ ":" ^ serialize tl
+      | hd :: tl -> Element.serialize hd ^ ":" ^ ser tl)
+      in ser r 
   end ;;
 
 (*......................................................................
