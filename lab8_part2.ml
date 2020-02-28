@@ -126,7 +126,8 @@ module MakeStack (Element: SERIALIZE) : (STACK with type element = Element.t) =
       List.fold_left f init s
 
     let rec serialize (s : stack) : string =
-      match s with
+      let r = List.rev s in
+      match r with
       | [] -> ""
       | [a] -> Element.serialize a
       | hd :: tl -> Element.serialize hd ^ ":" ^ serialize tl
